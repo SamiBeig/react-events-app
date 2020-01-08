@@ -1,10 +1,16 @@
-import React from 'react';
-import Form from './Components/Form'
-import './App.css';
+import React from "react";
+
+import Form from "./Components/Form";
+import FolderToggle from "./Components/FolderToggle";
+
+import "./App.css";
 
 function App() {
   return (
-    <Form/>
+    <div>
+      <Form />
+      <FolderToggle />
+    </div>
   );
 }
 

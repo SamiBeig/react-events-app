@@ -6,9 +6,12 @@ export default class Form extends React.Component {
     super(props);
     this.state = {
       firstName: "David",
-      lastName: "Mitchell"
+      lastName: "Mitchell",
+      firstNameChanged: false,
+      lastNameChanged: false,
+      firstNameTemp: "David",
+      lastNameTemp: "Mitchell"
     };
-    this.handleNameChange = this.handleNameChange.bind(this);
   }
 
   Display = () => {
@@ -29,13 +32,13 @@ export default class Form extends React.Component {
         <input
           type="text"
           id="firstName"
-          placeholder={this.state.firstName}
+          placeholder={this.state.firstNameTemp}
           onChange={this.handleFirstNameChange}
         />
         <input
           type="text"
           id="lastName"
-          placeholder={this.state.lastName}
+          placeholder={this.state.lastNameTemp}
           onChange={this.handleLastNameChange}
         />
         <button type="button" onClick={this.Save}>
@@ -50,18 +53,45 @@ export default class Form extends React.Component {
 
   handleFirstNameChange = event => {
     this.setState({
-      firstName: event.target.value
+      firstNameChanged: true,
+      firstNameTemp: event.target.value
     });
   };
 
   handleLastNameChange = event => {
     this.setState({
-      lastName: event.target.value
+      lastNameChanged: true,
+      lastNameTemp: event.target.value
     });
   };
 
-  Save = () => {};
-  Cancel = () => {};
+  Save = () => {
+    if (this.state.firstNameChanged) {
+      this.setState({
+        firstNameChanged: false,
+        firstName: this.state.firstNameTemp
+      });
+    }
+
+    if (this.state.lastNameChanged) {
+      this.setState({
+        lastNameChanged: false,
+        lastName: this.state.lastNameTemp
+      });
+    }
+
+    this.setState({
+      firstNameChanged: false,
+      lastNameChanged: false
+    });
+  };
+
+  Cancel = () => {
+    this.setState({
+      firstNameChanged: false,
+      lastNameChanged: false
+    });
+  };
 
   render() {
     return (
@@ -70,11 +100,5 @@ export default class Form extends React.Component {
         {this.Input()}
       </div>
     );
-  }
-
-  handleNameChange(event) {
-    this.setState({
-      name: event.target.value
-    });
   }
 }

@@ -10,7 +10,8 @@ export default class Form extends React.Component {
       firstNameChanged: false,
       lastNameChanged: false,
       firstNameTemp: "David",
-      lastNameTemp: "Mitchell"
+      lastNameTemp: "Mitchell",
+      showInput: false
     };
   }
 
@@ -24,6 +25,12 @@ export default class Form extends React.Component {
         </button>
       </div>
     );
+  };
+
+  Edit = () => {
+    this.setState({
+      showInput: true
+    });
   };
 
   Input = () => {
@@ -68,37 +75,36 @@ export default class Form extends React.Component {
   Save = () => {
     if (this.state.firstNameChanged) {
       this.setState({
-        firstNameChanged: false,
         firstName: this.state.firstNameTemp
       });
     }
 
     if (this.state.lastNameChanged) {
       this.setState({
-        lastNameChanged: false,
         lastName: this.state.lastNameTemp
       });
     }
 
     this.setState({
       firstNameChanged: false,
-      lastNameChanged: false
+      lastNameChanged: false,
+      showInput: false
     });
   };
 
   Cancel = () => {
     this.setState({
       firstNameChanged: false,
-      lastNameChanged: false
+      lastNameChanged: false,
+      showInput: false
     });
   };
 
   render() {
-    return (
-      <div>
-        {this.Display()}
-        {this.Input()}
-      </div>
-    );
+    if (!this.state.showInput) {
+      return <div>{this.Display()}</div>;
+    } else {
+      return <div>{this.Input()}</div>;
+    }
   }
 }
